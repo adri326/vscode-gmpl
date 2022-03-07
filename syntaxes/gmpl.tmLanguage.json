@@ -7,12 +7,14 @@
 			"include": "#comments"
 		},
 		{
-			"match": "\\b(set|setof|param|var)\\b",
-			"name": "keyword.other.gmpl"
+			"include": "#range_operator"
 		},
 		{
-			"match": "\\b(&&|and|by|sum|prod|exists|cross|diff|div|in|Infini|inter|less|mod|not|dimen|or|\\|\\||symdiff|union|within|OUT|IN)\\b",
-			"name": "keyword.operator.gmpl"
+			"include": "#operator"
+		},
+		{
+			"match": "\\b(set|setof|param|var)\\b",
+			"name": "keyword.other.gmpl"
 		},
 		{
 			"match": "\\b(data|end|display|for|forall|else|if|then|solve|maximize|minimize|table|check|subj(?:ect)?\\s+to)\\b",
@@ -36,8 +38,7 @@
 			"name": "constant.language.gmpl"
 		},
 		{
-			"match": "\\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)(L|l|UL|ul|u|U|F|f|ll|LL|ull|ULL)?\\b",
-			"name": "constant.numeric.gmpl"
+			"include": "#number"
 		},
 		{
 			"comment": "set CONSTANT idiom",
@@ -46,7 +47,7 @@
 		},
 		{
 			"comment": "variable idiom",
-			"match": "\\b[A-Z][A-Za-z0-9_]+\\b",
+			"match": "\\b[A-Za-z_][A-Za-z0-9_]+\\b",
 			"name": "variable.other.gmpl"
 		},
 		{
@@ -91,6 +92,26 @@
 					"include": "#string_escaped_char"
 				}
 			]
+		},
+		{
+			"begin": "(?<=\\b[a-zA-Z_0-9][a-zA-Z_0-9]*\\s*)\\{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.brackets.curly.gmpl"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.brackets.curly.gmpl"
+				}
+			},
+			"name": "support.other.range.gmpl",
+			"patterns": [
+				{
+					"include": "#range"
+				}
+			]
 		}
 	],
 	"repository": {
@@ -128,6 +149,65 @@
 					"name": "invalid.illegal.unknown-escape.gmpl"
 				}
 			]
+		},
+		"range": {
+			"begin": "(\\b[a-zA-Z_][a-zA-Z_0-9]*\\b)\\s+(in)\\s+",
+			"beginCaptures": {
+				"1": {
+					"name": "variable.other.gmpl"
+				},
+				"2": {
+					"name": "keyword.other.in.gmpl"
+				}
+			},
+			"end": "[,:]|(?=\\})",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.comma.gmpl"
+				}
+			},
+			"name": "support.other.range.definition.gmpl",
+			"patterns": [
+				{
+					"include": "#variable"
+				},
+				{
+					"include": "#number"
+				},
+				{
+					"include": "#range_operator"
+				}
+			]
+		},
+		"variable": {
+			"match": "\\b[a-zA-Z_][a-zA-Z_0-9]*\\b",
+			"captures": {
+				"1": {
+					"name": "variable.other"
+				}
+			}
+		},
+		"range_operator": {
+			"match": "(\\d+)?(\\.\\.)(\\d+)?",
+			"captures": {
+				"1": {
+					"name": "constant.numeric.gmpl"
+				},
+				"2": {
+					"name": "keyword.operator.range.gmpl"
+				},
+				"3": {
+					"name": "constant.numeric.gmpl"
+				}
+			}
+		},
+		"number": {
+			"match": "\\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)(L|l|UL|ul|u|U|F|f|ll|LL|ull|ULL)?\\b",
+			"name": "constant.numeric.gmpl"
+		},
+		"operator": {
+			"match": "\\b(and|by|sum|prod|exists|cross|diff|div|in|Infini|inter|less|mod|not|dimen|or|symdiff|union|within|OUT|IN)\\b|(&&|\\|\\||>=?|<=?|[!=]=)",
+			"name": "keyword.operator.gmpl"
 		},
 		"string_placeholder": {
 			"patterns": [
