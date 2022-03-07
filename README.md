@@ -27,3 +27,7 @@ Language grammar definition as provided by (with modifications): https://en.wiki
 <!-- ### 1.0.0
 
 Initial release of GNU MathProg Language Support for VS Code -->
+
+## License
+
+This repository was originally (implicitely) released under the CC3.0-SA license. This fork is re-released under the GLPv3 license.
