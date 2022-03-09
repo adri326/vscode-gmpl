@@ -1,9 +1,11 @@
 {
-	"name": "gmpl",
-	"displayName": "GMPL",
-	"description": "",
-	"version": "1.0.0",
-	"publisher": "steffenk1337",
+	"name": "gmpl-fork",
+	"displayName": "GMPL Fork",
+	"description": "A fork of steffenk1337's gmpl syntax highlight extension",
+	"version": "1.0.1",
+	"authors": ["steffenk1337", "Shad Amethyst"],
+  "publisher": "gmpl-fork",
+  "repository": "https://github.com/adri326/vscode-gmpl",
 	"engines": {
 		"vscode": "^1.38.0"
 	},
